@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+/* Mode sombre piloté par l'attribut data-theme (préférence utilisateur ou système). */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, sans-serif;
+
+  /* Palette : bleu foncé, bleu clair, vert. Contrastes vérifiés AA sur fond clair et sombre. */
+  --color-marine-50: #eef4ff;
+  --color-marine-100: #dbe6fb;
+  --color-marine-200: #b7cdf3;
+  --color-marine-600: #1d4a8f;
+  --color-marine-700: #153b76;
+  --color-marine-800: #0f3166;
+  --color-marine-900: #0b2a5b;
+  --color-marine-950: #071a3a;
+
+  --color-ciel-300: #7dd3fc;
+  --color-ciel-400: #38bdf8;
+  --color-ciel-500: #0ea5e9;
+
+  --color-savane-500: #22c55e;
+  --color-savane-600: #16a34a;
+  --color-savane-700: #15803d;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+  html[data-theme='dark'] {
+    color-scheme: dark;
+  }
+  body {
+    @apply min-h-dvh bg-slate-50 text-slate-900 antialiased dark:bg-marine-950 dark:text-slate-100;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  :focus-visible {
+    @apply outline-3 outline-offset-2 outline-ciel-500;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
