@@ -34,7 +34,20 @@ export function readConfig(raw: Record<string, unknown>, fallbackOrigin?: string
   };
 }
 
+const DEFAULT_ENV: Record<string, unknown> = {
+  VITE_SUPABASE_URL: 'https://hynxhnjktexeylrtmixa.supabase.co',
+  VITE_SUPABASE_ANON_KEY:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5bnhobmprdGV4ZXlscnRtaXhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI0OTM4MjUsImV4cCI6MjEwODA2OTgyNX0.ailGspt8lokPHIzg5hyXXv-eYjEEEFSOAIJjCKhdfAM',
+};
+
+const rawEnv = import.meta.env as unknown as Record<string, unknown>;
+
 export const appConfig: AppConfig = readConfig(
-  import.meta.env as unknown as Record<string, unknown>,
+  {
+    ...DEFAULT_ENV,
+    ...(rawEnv.VITE_SUPABASE_URL ? { VITE_SUPABASE_URL: rawEnv.VITE_SUPABASE_URL } : {}),
+    ...(rawEnv.VITE_SUPABASE_ANON_KEY ? { VITE_SUPABASE_ANON_KEY: rawEnv.VITE_SUPABASE_ANON_KEY } : {}),
+    ...(rawEnv.VITE_APP_URL ? { VITE_APP_URL: rawEnv.VITE_APP_URL } : {}),
+  },
   typeof window !== 'undefined' ? window.location.origin : undefined,
 );
